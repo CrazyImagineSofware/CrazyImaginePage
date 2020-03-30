@@ -1,18 +1,63 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { FunctionComponent, useState, useEffect } from 'react';
+import animejs from 'animejs';
 import './App.css';
 
-function App() {
+const Box: FunctionComponent<{
+    initial?: string
+  }> = ({
+    initial = 'rgb(255,0, 0)'
+  }
+  ) => {
+
+  let tl = animejs.timeline({
+    easing: 'easeOutExpo',
+    duration: 5000
+  })
+
+  useEffect(() => {
+    tl.add({
+      targets: '.aqui',
+      backgroundColor: initial
+    })
+
+    console.log("coño")
+  }, [initial]);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Crazy Image Page with React :D
+        <p className= 'aqui'>
+          Crazy Image Page with React :D {initial}
         </p>
-      </header>
     </div>
   );
+}
+
+const App: FunctionComponent = () => {
+
+  const [alterPos, setAlterPos] = useState('rgb(0,255, 0)')
+
+return (
+
+  <div className="App">
+  <button
+    onClick={() =>
+      setAlterPos('rgb(255,0, 0)')
+    }
+  >
+    red
+  </button>
+
+  <button
+    onClick={() =>
+      setAlterPos('rgb(0,255, 0)')
+    }
+  >
+    green
+  </button>
+  <Box initial = {alterPos}/>
+</div>
+);
 }
 
 export default App;
